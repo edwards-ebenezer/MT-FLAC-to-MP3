@@ -40,7 +40,7 @@ Upon execution the script will find all the flac files in the current directory 
     ARTIST - ALBUM - YEAR [SOURCE - MP3 - BITRATE]
     
 This script fully utilizes all available cores on the host machine; evidence of such can be seen below.
-![alt tag](https://user-images.githubusercontent.com/20598737/30212936-ea7e147c-9474-11e7-8aff-44358205b7a5.png)
+![alt tag](https://user-images.githubusercontent.com/20598737/30219088-fc3f9fc8-9488-11e7-932b-42ca2a320824.png)
 
 # Sources
   O. Tange (2011): GNU Parallel - The Command-Line Power Tool,
