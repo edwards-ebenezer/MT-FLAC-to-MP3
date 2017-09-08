@@ -37,3 +37,10 @@ This should be pretty self explainitory but in case you were wondering "Source" 
 Upon execution the script will find all the flac files in the current directory and pass them to the parallel package which will use as manny threads as your CPU has to then decode the files with the flac package. Then after each thread is done decoding, it's file will be passed into the lame package which will encode them into both mp3-V0 and/or mp3-320 (to further explain the script will finish decoding and encoding all the files to mp3-V0 first before starting the process for mp3-320). At first these new mp3's will be generating inside the current directory; upon completion of encoding they will then be moved to a user designated location inside of a folder that matches the following naming convention
 
     ARTIST - ALBUM - YEAR [SOURCE - MP3 - BITRATE]
+    
+# Sources
+  O. Tange (2011): GNU Parallel - The Command-Line Power Tool,
+  ;login: The USENIX Magazine, February 2011:42-47.
+  
+  Support this guy; his project is awesome!!
+  https://github.com/martinda/gnu-parallel
