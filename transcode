@@ -1,0 +1,21 @@
+#!/bin/bash
+
+read -p 'Artist: ' ARTIST
+read -p 'Album: ' ALBUM
+read -p 'Release Year: ' YEAR
+read -p 'Source: ' SOURCE
+read -p 'Destination Directory (ABSOLUTE PATH): ' DIR
+
+mkdir "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]"
+
+ls *.flac | time parallel -j+0 --eta flac2mp3V.sh {}
+
+mv *.mp3 "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]"
+mv "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]" $DIR
+
+mkdir "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]"
+
+ls *.flac | time parallel -j+0 --eta flac2mp320.sh {}
+
+mv *.mp3 "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]"
+mv "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]" $DIR
