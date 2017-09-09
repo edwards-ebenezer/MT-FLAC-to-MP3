@@ -1,21 +1,25 @@
 #!/bin/bash
 
-read -p 'Artist: ' ARTIST
-read -p 'Album: ' ALBUM
-read -p 'Release Year: ' YEAR
-read -p 'Source: ' SOURCE
-read -p 'Destination Directory (ABSOLUTE PATH): ' DIR
+#Getting Metadata Info From The FLACs
+for a in ./*.flac; do
+  ARTIST=$(metaflac "$a" --show-tag=ARTIST | sed s/.*=//g)
+  ALBUM=$(metaflac "$a" --show-tag=ALBUM | sed s/.*=//g)
+  DATE=$(metaflac "$a" --show-tag=DATE | sed s/.*=//g)
+done
+YEAR=$(echo $DATE | awk 'BEGIN {FS="-"}{printf $1}')
+DIR=$(pwd)
 
-mkdir "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]"
+#Gathering Additional Data From User
+read -rp 'Source: ' SOURCE
 
+#Transcoding FLAC->V0
+mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
 ls *.flac | time parallel -j+0 --eta flac2mp3V.sh {}
+mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
+mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]" $DIR
 
-mv *.mp3 "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]"
-mv "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ V0\]" $DIR
-
-mkdir "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]"
-
+#Transcoding FLAC->MP3-320
+mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
 ls *.flac | time parallel -j+0 --eta flac2mp320.sh {}
-
-mv *.mp3 "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]"
-mv "/tmp/$ARTIST\ -\ $ALBUM\ -\ $YEAR\ \[$SOURCE\ -\ MP3\ -\ 320\]" $DIR
+mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
+mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]" $DIR
