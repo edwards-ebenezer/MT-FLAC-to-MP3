@@ -34,7 +34,7 @@ Upon execution the user will be prompted for a SOURCE (i.e. Where the FLAC came 
 ![alt tag](https://user-images.githubusercontent.com/20598737/30212927-e700977a-9474-11e7-9061-67e4946ddbb2.png)
 
 # Further Explaination:
-Upon execution the script will find all the flac files in the current directory and pass them to the parallel package which will use as manny threads as your CPU has to then decode the files with the flac package. Then after each thread is done decoding, it's file will be passed into the lame package which will encode them into both mp3-V0 & mp3-320 (to further explain the script will finish decoding and encoding all the files into mp3-V0 first before starting the process for mp3-320). At first these new mp3 files will be generated inside /tmp/ Upon completion of encoding the MP3 files will then be moved into the currecnt working directory contained inside of a folder that matches the following naming convention.
+Upon execution the script will find all the flac files in the current directory and pass them to the parallel package which will use as manny threads as your CPU has to then decode the files with the flac package. Then after each thread is done decoding, it's file will be passed into the lame package which will encode them into both mp3-V0 & mp3-320 (to further explain the script will finish decoding and encoding all the files into mp3-V0 first before starting the process for mp3-320). At first these new mp3 files will be generated inside /tmp/ Upon completion of encoding the MP3 files will then be moved into the current working directory contained inside of a folder that matches the following naming convention.
 
     ARTIST - ALBUM - YEAR [SOURCE - MP3 - BITRATE]
     
