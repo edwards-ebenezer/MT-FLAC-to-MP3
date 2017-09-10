@@ -27,7 +27,7 @@ mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]" $DIR
 mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
 flacmpc () {
   a=$1
-  flac =cd "$a" | lame -q 0 --cbr -b 320 --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${a%.*}".mp3;
+  flac -cd "$a" | lame -q 0 --cbr -b 320 --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${a%.*}".mp3;
 }
 export -f flacmpc
 ls *.flac | time parallel -j+0 --eta flacmpc {}
