@@ -18,6 +18,7 @@ flacmpv () {
   f=$1
   flac -cd "$f" | lame -m j -q 0 -V 0 --vbr-new --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${f%.*}".mp3;
 }
+export -f flacmpv
 ls *.flac | time parallel -j+0 --eta flacmpv {}
 mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
 mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]" $DIR
@@ -28,6 +29,7 @@ flacmpc () {
   a=$1
   flac =cd "$a" | lame -q 0 --cbr -b 320 --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${a%.*}".mp3;
 }
+export -f flacmpc
 ls *.flac | time parallel -j+0 --eta flacmpc {}
 mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
 mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]" $DIR
