@@ -14,12 +14,20 @@ read -rp 'Source: ' SOURCE
 
 #Transcoding FLAC->V0
 mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
-ls *.flac | time parallel -j+0 --eta flac2mp3V.sh {}
+flacmpv () {
+  f=$1
+  flac -cd "$f" | lame -m j -q 0 -V 0 --vbr-new --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${f%.*}".mp3;
+}
+ls *.flac | time parallel -j+0 --eta flacmpv {}
 mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
 mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]" $DIR
 
 #Transcoding FLAC->MP3-320
 mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
-ls *.flac | time parallel -j+0 --eta flac2mp320.sh {}
+flacmpc () {
+  a=$1
+  flac =cd "$a" | lame -q 0 --cbr -b 320 --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${a%.*}".mp3;
+}
+ls *.flac | time parallel -j+0 --eta flacmpc {}
 mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
 mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]" $DIR
