@@ -18,11 +18,11 @@ You can install the prerequisite packages with the following command.
 
 Make sure you have the proper permission bits set.
 
-    sudo chmod 755 transcode flac2mp3V.sh flac2mp320.sh
+    sudo chmod 755 transcode
   
 Move scripts into your /usr/local/bin/ directory.
 
-    sudo mv transcode flac2mp3V.sh flac2mp320.sh /usr/local/bin/
+    sudo mv transcode /usr/local/bin/
   
 # Proper Use:
 Now you are free to navigate to any folder containing FLAC files you wish to convert to mp3.
