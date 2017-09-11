@@ -16,8 +16,9 @@ You can install the prerequisite packages with the following command.
 
     sudo apt-get install flac lame parallel time
 
-Make sure you have the proper permission bits set.
+Download the scrip with wget and make sure you have the proper permission bits set.
 
+    wget transcode https://raw.githubusercontent.com/edwards-ebenezer/MT-FLAC-to-MP3/master/transcode
     sudo chmod 755 transcode
   
 Move scripts into your /usr/local/bin/ directory.
