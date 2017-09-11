@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#Getting Metadata Info From The FLACs
-for a in ./*.flac; do
+# Getting Metadata Info From The FLACs
+for a in ./*.flac; do 
   ARTIST=$(metaflac "$a" --show-tag=ARTIST | sed s/.*=//g)
   ALBUM=$(metaflac "$a" --show-tag=ALBUM | sed s/.*=//g)
   DATE=$(metaflac "$a" --show-tag=DATE | sed s/.*=//g)
@@ -9,17 +9,30 @@ done
 YEAR=$(echo $DATE | awk 'BEGIN {FS="-"}{printf $1}')
 DIR=$(pwd)
 
-#Gathering Additional Data From User
+# Gathering Source Data From User
+# Source=(Where the FLAC file(s) were ripped/captured from [WEB, CD, VINYL, TAPE... etc])
 read -rp 'Source: ' SOURCE
 
-#Transcoding FLAC->V0
-mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
-ls *.flac | time parallel -j+0 --eta flac2mp3V.sh {}
-mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
-mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]" $DIR
+# Transcoding FLAC->V0
+VDIR="/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
+mkdir "$VDIR"
+flacmp3v () {
+  f=$1
+  flac -cd "$f" | lame -m j -q 0 -V 0 --vbr-new --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${f%.*}".mp3;
+}
+export -f flacmp3v
+ls *.flac | time parallel -j+0 --eta flacmp3v {}
+mv /tmp/*.mp3 "$VDIR"
+mv "$VDIR" "$DIR/"
 
-#Transcoding FLAC->MP3-320
-mkdir "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
-ls *.flac | time parallel -j+0 --eta flac2mp320.sh {}
-mv /tmp/*.mp3 "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
-mv "/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]" $DIR
+# Transcoding FLAC->MP3-320
+CDIR="/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
+mkdir "$CDIR"
+flacmp3c () {
+  a=$1
+  flac -cd "$a" | lame -q 0 --cbr -b 320 --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${a%.*}".mp3;
+}
+export -f flacmp3c
+ls *.flac | time parallel -j+0 --eta flacmp3c {}
+mv /tmp/*.mp3 "$CDIR"
+mv "$CDIR" "$DIR/"
