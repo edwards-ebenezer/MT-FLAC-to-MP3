@@ -18,7 +18,7 @@ VDIR="/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - V0]"
 mkdir "$VDIR"
 flacmp3v () {
   f=$1
-  flac -cd "$f" | lame -m j -q 0 -V 0 --vbr-new --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${f%.*}".mp3;
+  flac -cd "$f" | lame -q 0 -V 0 --vbr-new --noreplaygain --ignore-tag-errors --add-id3v2 - /tmp/"${f%.*}".mp3;
 }
 export -f flacmp3v
 ls *.flac | time parallel -j+0 --eta flacmp3v {}
