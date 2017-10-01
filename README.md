@@ -45,6 +45,7 @@ This script fully utilizes all available cores on the host machine; evidence of 
 # Sources
   O. Tange (2011): GNU Parallel - The Command-Line Power Tool,
   ;login: The USENIX Magazine, February 2011:42-47.
-  
   Support this guy; his project is awesome!!
   https://github.com/martinda/gnu-parallel
+  
+  ArchLinux Convert FLAC to MP3 - https://wiki.archlinux.org/index.php/Convert_FLAC_to_MP3
