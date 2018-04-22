@@ -23,7 +23,7 @@ flacmp3v () {
 export -f flacmp3v
 ls *.flac | time parallel -j+0 --eta flacmp3v {}
 mv /tmp/*.mp3 "$VDIR"
-mv "$VDIR" "$DIR/"
+mv "$VDIR" "$DIR/"../
 
 # Transcoding FLAC->MP3-320
 CDIR="/tmp/$ARTIST - $ALBUM - $YEAR [$SOURCE - MP3 - 320]"
@@ -35,4 +35,4 @@ flacmp3c () {
 export -f flacmp3c
 ls *.flac | time parallel -j+0 --eta flacmp3c {}
 mv /tmp/*.mp3 "$CDIR"
-mv "$CDIR" "$DIR/"
+mv "$CDIR" "$DIR/"../
